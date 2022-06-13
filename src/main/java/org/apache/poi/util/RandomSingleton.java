@@ -1,4 +1,3 @@
-
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -15,19 +14,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-
-
 package org.apache.poi.util;
 
-/**
- * a repository for constants shared by classes within this package
- */
+import java.security.SecureRandom;
 
-public interface LittleEndianConsts {
-    // sizes of various numbers in this environment
-    int BYTE_SIZE   = 1;
-    int SHORT_SIZE  = 2;
-    int INT_SIZE    = 4;
-    int LONG_SIZE   = 8;
-    int DOUBLE_SIZE = 8;
-}   // end public interface LittleEndianConsts
+/*
+If it is important that the generated Random numbers not be guessable,
+you MUST NOT create a new Random for each random number; the values are too easily guessable.
+
+You should strongly consider using a java.security.SecureRandom instead
+(and avoid allocating a new SecureRandom for each random number needed).
+*/
+
+public class RandomSingleton {
+    private static final SecureRandom INSTANCE = new SecureRandom();
+
+    public static SecureRandom getInstance() {
+        return INSTANCE;
+    }
+}
