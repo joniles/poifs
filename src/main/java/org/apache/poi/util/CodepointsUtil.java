@@ -17,22 +17,13 @@
 
 package org.apache.poi.util;
 
-import java.io.FilterInputStream;
-import java.io.InputStream;
+import java.util.Iterator;
 
-/**
- * A wrapper around an {@link InputStream}, which 
- *  ignores close requests made to it.
- *
- * Useful with {@link org.apache.poi.poifs.filesystem.POIFSFileSystem}, where you want
- *  to control the close yourself.
- */
-public class CloseIgnoringInputStream extends FilterInputStream {
-   public CloseIgnoringInputStream(InputStream in) {
-      super(in);
-   }
-
-   public void close() {
-      // Does nothing and ignores closing the wrapped stream
-   }
+@Internal
+public class CodepointsUtil {
+    public static Iterator<String> iteratorFor(String text) {
+        return text.codePoints()
+                .mapToObj(codePoint -> new StringBuilder().appendCodePoint(codePoint).toString())
+                .iterator();
+    }
 }
